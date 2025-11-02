@@ -1,6 +1,6 @@
 # SmartSense Inbox - Intelligent SMS Summarizer
 
-**Hackathon Project**: Transform SMS chaos into clean, smart summaries with AI-powered categorization and threat detection.
+Transform SMS chaos into clean, smart summaries with AI-powered categorization and threat detection.
 
 ## 🎯 What is SmartSense Inbox?
 
@@ -18,7 +18,6 @@ An intelligent SMS summarizer application built for daily usage. This app helps 
 
 ## 🚀 Quick Start
 
-### For Hackathon Demo (< 1 day setup)
 
 **See [SETUP_GUIDE.md](SETUP_GUIDE.md) for complete instructions**
 
@@ -86,9 +85,9 @@ Automatically categorizes SMS into 6 categories using an **LLM (Large Language M
 - Filter messages by category
 - Visual category icons
 
-### 🚧 2. Threat Detection (PARTIALLY IMPLEMENTED)
+### 🚧 2. Threat Detection (WORKING)
 
-Identifies potential security threats within messages. The backend service is implemented, but the frontend UI does not yet display threat warnings.
+Identifies potential security threats within messages. The backend service is implemented,  the frontend UI displays threat warnings.
 
 - Suspicious URLs (bit.ly, tinyurl, etc.)
 - Money transfer requests
@@ -111,20 +110,18 @@ The system is designed to receive SMS from an Android device via a forwarding ap
 ## 🛣️ What's Next?
 
 - **Complete SMS Forwarding**: Finalize and test the real-time SMS forwarding feature.
-- **Threat UI**: Display threat detection warnings in the user interface.
-- **Natural Language Query**: Implement a feature to allow users to ask questions about their messages (e.g., "What was the OTP from my bank?").
 - **User Authentication**: Add user accounts to support multiple users securely.
-- 📂 **Category Breakdown**: Count and summary for each category
-- 📅 **Date Filtering**: View digest for any date
-- 🎨 **Visual Design**: Stats cards with icons and colors
+
+
 
 **API Endpoint**: `GET /api/v1/digest?date_filter=YYYY-MM-DD`
+
 
 ### 4. Natural Language Chat
 
 ### ⚡ 4. Natural Language Q&A (READY)
 
-AI-powered chat interface (requires OpenAI API key):
+AI-powered chat interface (requires OpenRouter API key):
 
 - 💬 Ask questions in plain English
 - 🎯 Context-aware responses
@@ -145,8 +142,8 @@ AI-powered chat interface (requires OpenAI API key):
 **Frontend**: Angular 20  
 **Backend**: FastAPI (Python)  
 **Database**: SQLite  
-**AI/ML**: Rule-based + Optional OpenAI  
-**SMS Integration**: SMS Forwarder App + ngrok
+**AI/ML**: Rule-based + LLM  
+**SMS Integration**: SMS Forwarder App + ngrok 
 
 ## 📱 SMS Integration Options
 
@@ -261,9 +258,6 @@ SmartSense-Inbox/
 
 MIT License - Free to use and modify
 
-## 👥 Contact
-
-Developed for hackathon demonstration
 
 ---
 
