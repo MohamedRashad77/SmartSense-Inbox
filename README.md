@@ -6,7 +6,7 @@
 
 # SmartSense Inbox 📱
 
-An intelligent SMS summarizer application built for hackathons. This app helps users manage SMS overload by automatically categorizing messages, detecting threats, generating daily digests, and answering natural language queries about their messages.
+An intelligent SMS summarizer application built for daily usage. This app helps users manage SMS overload by automatically categorizing messages, detecting threats, generating daily digests, and answering natural language queries about their messages.
 
 ## ✅ Status: FULLY FUNCTIONAL
 
