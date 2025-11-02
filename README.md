@@ -8,11 +8,13 @@
 
 An intelligent SMS summarizer application built for hackathons. This app helps users manage SMS overload by automatically categorizing messages, detecting threats, generating daily digests, and answering natural language queries about their messages.
 
-## ✅ Status: FULLY FUNCTIONAL
+## ✅ Status: Functional Demo (In Development)
 
-**Backend**: FastAPI + SQLite + Python 3.13  
+**Backend**: FastAPI + Google Firestore + Python 3.13  
 **Frontend**: Angular 20 + TypeScript  
-**Demo Ready**: ✅ All core features working!
+**Demo Ready**: ✅ Core features are working! See "Features" section for details.
+
+> **Note**: This project is a proof-of-concept. While the core summarization and categorization features are functional using sample data, real-time SMS forwarding is still under development.
 
 ## 🚀 Quick Start
 
@@ -69,7 +71,7 @@ python upload_sample.py
 
 ### ✅ 1. Smart Categorization (WORKING)
 
-Automatically categorizes SMS into 6 categories using keyword-based classification:
+Automatically categorizes SMS into 6 categories using an **LLM (Large Language Model)**:
 
 - 💰 **Finance** - Banking alerts, credit card transactions, payments
 - 🎁 **Offers** - Discounts, cashback, promotional deals
@@ -84,20 +86,34 @@ Automatically categorizes SMS into 6 categories using keyword-based classificati
 - Filter messages by category
 - Visual category icons
 
-### 2. Threat Detection
+### 🚧 2. Threat Detection (PARTIALLY IMPLEMENTED)
+
+Identifies potential security threats within messages. The backend service is implemented, but the frontend UI does not yet display threat warnings.
 
 - Suspicious URLs (bit.ly, tinyurl, etc.)
 - Money transfer requests
 - Account impersonation
 - Phishing patterns
 
-### 3. Daily Digest
-
 ### ✅ 3. Daily Digest (WORKING)
 
 Beautiful summary page with:
 
 - 📊 **Overview Stats**: Total messages, categories count, threats detected
+
+### ⏳ 4. SMS Forwarding (IN PROGRESS)
+
+The system is designed to receive SMS from an Android device via a forwarding app. The backend endpoint is ready, but the end-to-end integration is not yet complete.
+
+- **See [SMS_FORWARDING_GUIDE.md](SMS_FORWARDING_GUIDE.md) for setup instructions.**
+- Currently, the demo relies on loading sample data.
+
+## 🛣️ What's Next?
+
+- **Complete SMS Forwarding**: Finalize and test the real-time SMS forwarding feature.
+- **Threat UI**: Display threat detection warnings in the user interface.
+- **Natural Language Query**: Implement a feature to allow users to ask questions about their messages (e.g., "What was the OTP from my bank?").
+- **User Authentication**: Add user accounts to support multiple users securely.
 - 📂 **Category Breakdown**: Count and summary for each category
 - 📅 **Date Filtering**: View digest for any date
 - 🎨 **Visual Design**: Stats cards with icons and colors
