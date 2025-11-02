@@ -1,0 +1,108 @@
+/* App shell: modern, clean header */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus-visible {
+  left: 16px;
+  top: 12px;
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-control);
+  z-index: 1000;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-bottom: var(--divider);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: block;
+  object-fit: cover;
+}
+.brand-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--color-text-2);
+  padding: 8px 12px;
+  border-radius: var(--radius-pill-wide);
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
+}
+.nav-link:hover {
+  background: var(--chip-bg);
+  border-color: var(--chip-border);
+  color: var(--color-text);
+}
+.nav-link.active {
+  background: var(--chip-bg-selected);
+  border-color: rgba(34, 211, 238, 0.5);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.app-main {
+  flex: 1;
+  padding: 16px;
+}
+
+.app-footer {
+  background: var(--color-surface);
+  color: var(--color-text-3);
+  text-align: center;
+  padding: 16px;
+  font-size: 14px;
+  border-top: var(--divider);
+}

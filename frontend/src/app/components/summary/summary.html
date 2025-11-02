@@ -1,0 +1,188 @@
+<div class="summary-container">
+  <!-- Header -->
+  <div class="summary-header">
+    <h1>📊 Daily Digest</h1>
+    <p class="summary-subtitle">AI-powered insights into your messages</p>
+  </div>
+
+  <!-- Date selector -->
+  <div class="date-selector-card">
+    <div class="calendar-icon">📅</div>
+    <label>Select Date:</label>
+    <input type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" />
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p class="loading-text">Analyzing your messages...</p>
+  </div>
+
+  <!-- Digest Content -->
+  <div *ngIf="!loading && digest" class="digest-content">
+    <!-- Overview Stats -->
+    <div class="stats-grid">
+      <div class="stat-card messages-stat" style="animation-delay: 0ms">
+        <div class="stat-icon">📧</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ digest.total_messages }}</div>
+          <div class="stat-label">Total Messages</div>
+        </div>
+        <div class="stat-trend">+{{ digest.total_messages }} today</div>
+      </div>
+
+      <div class="stat-card categories-stat" style="animation-delay: 100ms">
+        <div class="stat-icon">📂</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ digest.categories.length }}</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-trend">{{ getCategoryNames() }}</div>
+      </div>
+
+      <div
+        class="stat-card threats-stat"
+        [ngClass]="{ 'has-threats': digest.threat_count > 0 }"
+        style="animation-delay: 200ms"
+      >
+        <div class="stat-icon">{{ digest.threat_count > 0 ? '⚠️' : '✅' }}</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ digest.threat_count }}</div>
+          <div class="stat-label">Threats Detected</div>
+        </div>
+        <div class="stat-trend">{{ getThreatStatus() }}</div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="category-section">
+      <div class="section-header">
+        <h2>📂 Category Breakdown</h2>
+        <p class="section-subtitle">Detailed insights by message type</p>
+      </div>
+
+      <div class="category-grid">
+        <div
+          *ngFor="let cat of digest.categories; let i = index"
+          class="category-card"
+          [style.animation-delay.ms]="i * 80"
+        >
+          <div class="category-header">
+            <div
+              class="category-icon-wrapper"
+              [style.background]="getCategoryGradient(cat.category)"
+            >
+              <span class="category-icon"
+                >{{ getCategoryIcon(cat.category) }}</span
+              >
+            </div>
+            <div class="category-info">
+              <span class="category-name">{{ cat.category | titlecase }}</span>
+              <div class="category-progress">
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="getPercentage(cat.count)"
+                    [style.background]="getCategoryGradient(cat.category)"
+                  ></div>
+                </div>
+                <span class="category-count">{{ cat.count }} messages</span>
+              </div>
+            </div>
+          </div>
+          <div class="category-summary">
+            <p>{{ cat.summary }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Chat Section -->
+    <div class="query-section">
+      <div class="section-header">
+        <h2>💬 Ask AI About Your Messages</h2>
+        <p class="section-subtitle">Get instant insights powered by AI</p>
+      </div>
+
+      <div class="query-card">
+        <div class="query-input-wrapper">
+          <div class="input-icon">🤖</div>
+          <input
+            type="text"
+            [(ngModel)]="queryText"
+            placeholder="e.g., How many OTP messages? Show banking transactions..."
+            (keyup.enter)="askQuery()"
+            class="query-input"
+          />
+          <button
+            (click)="askQuery()"
+            [disabled]="queryLoading || !queryText.trim()"
+            class="btn-query"
+          >
+            <span *ngIf="!queryLoading">Ask AI ✨</span>
+            <span *ngIf="queryLoading">
+              <span class="spinner-small"></span> Processing...
+            </span>
+          </button>
+        </div>
+
+        <div *ngIf="queryResponse" class="query-response">
+          <div class="response-header">
+            <span class="response-icon">💡</span>
+            <strong>AI Answer:</strong>
+          </div>
+          <p [innerHTML]="formatResponse(queryResponse)"></p>
+        </div>
+
+        <div class="query-examples">
+          <p class="examples-title">💡 Try asking:</p>
+          <div class="examples-grid">
+            <button
+              class="example-chip"
+              (click)="setQuery('How many offers did I get?')"
+            >
+              🎁 How many offers?
+            </button>
+            <button
+              class="example-chip"
+              (click)="setQuery('Show me OTP messages')"
+            >
+              🔐 Show OTP messages
+            </button>
+            <button
+              class="example-chip"
+              (click)="setQuery('Summarize today\'s messages')"
+            >
+              📝 Summarize today
+            </button>
+            <button
+              class="example-chip"
+              (click)="setQuery('Any banking alerts?')"
+            >
+              💳 Banking alerts?
+            </button>
+            <button
+              class="example-chip"
+              (click)="setQuery('Show me all threats')"
+            >
+              ⚠️ Show threats
+            </button>
+            <button
+              class="example-chip"
+              (click)="setQuery('What are the important messages?')"
+            >
+              ⭐ Important messages
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !digest" class="empty-state">
+    <div class="empty-icon">📭</div>
+    <h3>No messages found</h3>
+    <p>Try selecting a different date or check back later.</p>
+  </div>
+</div>

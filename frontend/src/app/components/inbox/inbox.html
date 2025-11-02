@@ -1,0 +1,160 @@
+<div class="inbox-container">
+  <!-- Header with Stats -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <span class="icon-gradient">📬</span>
+        <span class="title-text">SMS Inbox</span>
+      </h1>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value">{{ filteredMessages.length }}</div>
+          <div class="stat-label">Messages</div>
+        </div>
+        <div class="stat-card threat">
+          <div class="stat-value">{{ getThreatCount() }}</div>
+          <div class="stat-label">Threats</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ getUnreadCount() }}</div>
+          <div class="stat-label">Categories</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Filters Bar -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="applyFilters()"
+        placeholder="Search messages..."
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-pills">
+      <div class="filter-pill">
+        <label class="pill-label">📅</label>
+        <input
+          type="date"
+          [(ngModel)]="selectedDate"
+          (change)="applyFilters()"
+          class="date-input"
+        />
+      </div>
+
+      <div class="filter-pill">
+        <label class="pill-label">🏷️</label>
+        <select
+          [(ngModel)]="selectedCategory"
+          (change)="applyFilters()"
+          class="category-select"
+        >
+          <option value="">All Categories</option>
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat | titlecase }}
+          </option>
+        </select>
+      </div>
+
+      <button
+        class="filter-toggle"
+        [class.active]="showThreatsOnly"
+        (click)="toggleThreats()"
+      >
+        <span class="toggle-icon">⚠️</span>
+        <span>Threats Only</span>
+      </button>
+
+      <button
+        class="btn-clear"
+        (click)="clearFilters()"
+        *ngIf="hasActiveFilters()"
+      >
+        <span>✕</span> Clear
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading state with animation -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Loading messages...</p>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && filteredMessages.length === 0" class="empty-state">
+    <div class="empty-icon">📭</div>
+    <h3>No messages found</h3>
+    <p>Try adjusting your filters or check back later</p>
+  </div>
+
+  <!-- Messages Grid -->
+  <div class="messages-grid" *ngIf="!loading && filteredMessages.length > 0">
+    <div
+      *ngFor="let sms of filteredMessages; let i = index"
+      class="message-card"
+      [class.threat]="sms.is_threat"
+      [class.has-otp]="sms.has_otp"
+      [style.animation-delay.ms]="i * 50"
+    >
+      <!-- Threat indicator -->
+      <div *ngIf="sms.is_threat" class="threat-indicator">
+        <span class="threat-icon">⚠️</span>
+        <span class="threat-text">{{ sms.threat_reason }}</span>
+      </div>
+
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="sender-info">
+          <span
+            class="sender-avatar"
+            [style.background]="getAvatarColor(sms.sender)"
+          >
+            {{ getInitial(sms.sender) }}
+          </span>
+          <div class="sender-details">
+            <span class="sender-name">{{ sms.sender }}</span>
+            <span class="timestamp">{{ formatTime(sms.timestamp) }}</span>
+          </div>
+        </div>
+        <span
+          class="category-badge"
+          [style.background]="getCategoryGradient(sms.category || '')"
+        >
+          <span class="badge-icon"
+            >{{ getCategoryIcon(sms.category || '') }}</span
+          >
+          <span class="badge-text">{{ sms.category || 'other' }}</span>
+        </span>
+      </div>
+
+      <!-- Message Body -->
+      <div class="card-body">
+        <p class="message-text" [innerHTML]="highlightSearch(sms.body)"></p>
+      </div>
+
+      <!-- Card Footer with Tags -->
+      <div class="card-footer" *ngIf="hasAnyTag(sms)">
+        <div class="tags-container">
+          <span class="tag otp" *ngIf="sms.has_otp">
+            <span class="tag-icon">🔐</span>
+            <span>OTP</span>
+          </span>
+          <span class="tag money" *ngIf="sms.has_money_request">
+            <span class="tag-icon">💰</span>
+            <span>Money</span>
+          </span>
+          <span class="tag link" *ngIf="sms.urls && sms.urls.length > 0">
+            <span class="tag-icon">🔗</span>
+            <span>Link</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="app-container">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <a class="brand" routerLink="/" aria-label="SmartSense Inbox home">
+        <img
+          class="brand-mark"
+          src="/chat-bubble.svg"
+          alt=""
+          aria-hidden="true"
+        />
+        <span class="brand-title">SmartSense Inbox</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a
+          class="nav-link"
+          routerLink="/inbox"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active"
+          >Inbox</a
+        >
+        <a class="nav-link" routerLink="/summary" routerLinkActive="active"
+          >Summary</a
+        >
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="app-main" role="main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer" role="contentinfo">
+    <p>SmartSense Inbox — Intelligent SMS Summarizer</p>
+  </footer>
+</div>
